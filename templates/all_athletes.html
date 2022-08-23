@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<h3>All registerd Athletes</h3>
+	</head>
+
+	<body>
+		<table style="border-left: 300px; border-right: 300px;" border="1" frame="void" rules="rows">
+			<tr>
+				<th>Name</th>
+				<th>Date of Birth</th>
+				<th>Age Group</th>
+				<th>Gender</th>
+				<th>Events</th>
+			</tr>
+			{% for ath in athletes %}
+				<tr>
+					<td>{{ath.username}}</td>
+					<td>{{ath.date_of_birth}}</td>
+					<td>{{ath.age_group}}</td>
+					<td>{{ath.sex}}</td>
+					<td>
+						{% for event in ath.convert_str_to_list(ath.events) %}
+							<p>{{ event }}</p>
+						{% endfor%}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>

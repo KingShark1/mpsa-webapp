@@ -1,0 +1,123 @@
+<html>
+	<head>
+	
+	</head>
+
+	<body>
+		<form class="grid" action="/result" method="POST">
+			<center>
+				{% if name %}
+				<h3 style="color: blue;">{{name}} saved successfully</h3>
+				{% endif %}
+			</center>
+
+			<div class="BasicInfo" style="background-color: rgb(228, 217, 168); text-align:center">
+				<div class="Name" style="margin-top: 40px;">
+					<label for="name" style="margin: 30px; padding:30px">Enter your Name :</label><br>
+					<input type="text" name="name" id="name"><br>
+				</div>
+				<label for="dob" style="padding-top: 10px; margin: 10px;">Enter your Date of Birth</label><br>
+				<input type="date" name="dob" id="dob"><br>
+
+				<label for="sex">Enter your Gender</label><br>
+				<input type="radio" id="male" name="sex" value="boys">
+				<label for="male">Boy</label>
+				<input type="radio" id="female" name="sex" value="girls"></input>
+				<label for="female">Girl</label>
+			</div>
+			
+			<div class="checkboxes" style="margin-top: 50px;">
+				<table style="margin-left:auto; margin-right:auto">
+					<tr style="margin-right: 10px; margin-left:10px">
+						<th>Free Style</th>
+						<th>Back Stroke</th>
+						<th>Breast Stroke</th>
+						<th>Butterfly Stroke</th>
+						<th>Individual Medley</th>
+					</tr>
+					<tr style="margin-right: 10px; margin-left:10px">
+						<td>
+							<input type="checkbox" id="50 mt. Free Style" name="50 mt. Free Style" value="50 mt. Free Style">
+							<label for="50 mt. Free Style">50 mt. Free Style</label>
+						</td>
+						<td>
+							<input type="checkbox" id="events" name="50 mt. Back Stroke" value="50 mt. Back Stroke">
+							<label for="50 mt. Back Stroke">50 mt. Back Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="50 mt. Breast Stroke" name="50 mt. Breast Stroke" value="50 mt. Breast Stroke">
+							<label for="50 mt. Breast Stroke">50 mt. Breast Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="50 mt. Butterfly Stroke" name="50 mt. Butterfly Stroke" value="50 mt. Butterfly Stroke">
+							<label for="50 mt. Butterfly Stroke">50 mt. Butterfly Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="200 mt. I.M." name="200 mt. I.M." value="200 mt. I.M.">
+							<label for="200 mt. I.M.">200 mt. I.M.</label>
+						</td>
+					</tr>
+					<tr style="margin-right: 10px; margin-left:10px">
+						<td>
+							<input type="checkbox" id="100 mt. Free Style" name="100 mt. Free Style" value="100 mt. Free Style">
+							<label for="100 mt. Free Style">100 mt. Free Style</label>
+						</td>
+						<td>
+							<input type="checkbox" id="100 mt. Back Stroke" name="100 mt. Back Stroke" value="100 mt. Back Stroke">
+							<label for="100 mt. Back Stroke">100 mt. Back Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="100 mt. Breast Stroke" name="100 mt. Breast Stroke" value="100 mt. Breast Stroke">
+							<label for="100 mt. Breast Stroke">100 mt. Breast Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="100 mt. Butterfly Stroke" name="100 mt. Butterfly Stroke" value="100 mt. Butterfly Stroke">
+							<label for="100 mt. Butterfly Stroke">100 mt. Butterfly Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="400 mt. I.M." name="400 mt. I.M." value="400 mt. I.M.">
+							<label for="400 mt. I.M.">400 mt. I.M.</label>
+						</td>
+					</tr>
+					<tr style="margin-right: 10px; margin-left:10px">
+						<td>
+							<input type="checkbox" id="200 mt. Free Style" name="200 mt. Free Style" value="200 mt. Free Style">
+							<label for="200 mt. Free Style">200 mt. Free Style</label>
+						</td>
+						<td>
+							<input type="checkbox" id="200 mt. Back Stroke" name="200 mt. Back Stroke" value="200 mt. Back Stroke">
+							<label for="200 mt. Back Stroke">200 mt. Back Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="200 mt. Breast Stroke" name="200 mt. Breast Stroke" value="200 mt. Breast Stroke">
+							<label for="200 mt. Breast Stroke">200 mt. Breast Stroke</label>
+						</td>
+						<td>
+							<input type="checkbox" id="200 mt. Butterfly Stroke" name="200 mt. Butterfly Stroke" value="200 mt. Butterfly Stroke">
+							<label for="200 mt. Butterfly Stroke">200 mt. Butterfly Stroke</label>
+						</td>
+					</tr>
+					<tr style="margin-right: 10px; margin-left:10px">
+						<td>
+							<input type="checkbox" id="400 mt. Free Style" name="400 mt. Free Style" value="400 mt. Free Style">
+							<label for="400 mt. Free Style">400 mt. Free Style</label>
+						</td>
+					</tr>
+					<tr style="margin-right: 10px; margin-left:10px">
+						<td>
+							<input type="checkbox" id="800 mt. Free Style" name="800 mt. Free Style" value="800 mt. Free Style">
+							<label for="800 mt. Free Style">800 mt. Free Style</label>
+						</td>
+					</tr>
+					<tr style="margin-right: 10px; margin-left:10px">
+						<td>
+							<input type="checkbox" id="1500 mt. Free Style" name="1500 mt. Free Style" value="1500 mt. Free Style">
+							<label for="1500 mt. Free Style">1500 mt. Free Style</label>
+						</td>
+					</tr>
+				</table>				
+			</div>
+			<center><input type="Submit" class ="file_submit"></center>
+		</form>
+	</body>
+</html>
