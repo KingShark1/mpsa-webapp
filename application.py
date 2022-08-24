@@ -15,13 +15,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 
 db = SQLAlchemy(app)
 
-# class Association(db.Model):
-# 	__tablename__ = "association"
+class Association(db.Model):
+	__tablename__ = "association"
 
-# 	left_id = Column(ForeignKey("left.id"), primary_key=True)
-# 	right_id = Column(ForeignKey("right.id"), primary_key=True)
-# 	event = relationship("Events", back_populates="athletes")
-# 	athlete = relationship("Athletes", back_populates="events")
+	left_id = Column(ForeignKey("left.id"), primary_key=True)
+	right_id = Column(ForeignKey("right.id"), primary_key=True)
+	event = relationship("Events", back_populates="athletes")
+	athlete = relationship("Athletes", back_populates="events")
 
 class Athletes(db.Model):
 	__tablename__ = "left"
@@ -31,12 +31,12 @@ class Athletes(db.Model):
 	date_of_birth = db.Column(db.String(12), nullable=False)
 	age_group = db.Column(db.String(6), nullable=False)
 	sex = db.Column(db.String(5), nullable=False)
-	events = db.Column(db.String(300), nullable=False)
+	events = relationship("Association", back_populates="athlete")
 
 	def convert_str_to_list(self, str):
 		print("inside convert str to list :", type(str))
 		return ast.literal_eval(str)
-
+	
 	def __repr__(self):
 		return f"""
 Id : {self.id}
@@ -45,15 +45,15 @@ Age Group : {self.date_of_birth[:4]}
 Date of Birth : {self.date_of_birth}
 Events : {self.events}"""
 
-# class Events(db.Model):
-# 	__tablename__ = "right"
+class Events(db.Model):
+	__tablename__ = "right"
 	
-# 	id = db.Column(db.Integer(), primary_key=True)
-# 	name = db.Column(db.String(80), nullable=False) # Name should consist of event name + gender + age group
-# 	athletes = relationship("Association", back_populates="event")
+	id = db.Column(db.Integer(), primary_key=True)
+	name = db.Column(db.String(80), nullable=False) # Name should consist of event name + gender + age group
+	athletes = relationship("Association", back_populates="event")
 
-# 	def __repr__(self):
-# 		return f"{self.name} {self.athletes}"
+	def __repr__(self):
+		return f"{self.name} {self.athletes}"
 
 
 @app.route('/')
@@ -72,13 +72,20 @@ def result():
 	sex = output.pop('sex')
 	# output now has only events.
 	events = list(output.keys())
+	
 	athlete = Athletes()
-
 	athlete.username = name
 	athlete.date_of_birth = dob	# in string format "yyyy-mm-dd"
 	athlete.sex = sex
 	athlete.age_group = utils.get_age_group_from_birthyear(int(dob[:4]))
-	athlete.events = f'{events}'
+	all_events = Events.query.all()
+
+	for event in events:
+		assoc = Association()
+		assoc.event = Events.query.filter_by(name=event).first()
+		assoc.event.name = event
+		athlete.events.append(assoc)
+
 
 	db.session.add(athlete)
 	db.session.commit()
@@ -92,4 +99,5 @@ def show_athletes():
 
 @app.route('/events')
 def events():
-	return render_template('events.html')
+	output = Events.query.all()
+	return render_template('events.html', events=output)

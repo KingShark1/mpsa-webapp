@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<h1 style="text-align: center;"><a href='/'>Madhya Pradesh Swimming Association</a></h1>
 		<h3>All registerd Athletes</h3>
 	</head>
 
@@ -19,8 +20,8 @@
 					<td>{{ath.age_group}}</td>
 					<td>{{ath.sex}}</td>
 					<td>
-						{% for event in ath.convert_str_to_list(ath.events) %}
-							<p>{{ event }}</p>
+						{% for event in ath.events %}
+							<p>{{ event.event.name }}</p>
 						{% endfor%}
 					</td>
 				</tr>
