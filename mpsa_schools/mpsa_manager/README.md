@@ -1,0 +1,1 @@
+# SCHOOLS manager
