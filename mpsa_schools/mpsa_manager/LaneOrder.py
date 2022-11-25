@@ -23,7 +23,11 @@ def append_in_sheet(df, worksheet, row):
   
   for i in range(len(df)):
     worksheet.write(row+lane_fill_order[i], name_col, df.iloc[i]['Name'])
-    worksheet.write(row+lane_fill_order[i], dob_col, df.iloc[i]['Date of Birth'])
+    try:
+      worksheet.write(row+lane_fill_order[i], dob_col, df.iloc[i]['Date of Birth'])
+    except:
+      pass
+    
     # worksheet.write(row+lane_fill_order[i], district_col, df.iloc[i][PLACE])
     # worksheet.write(row+lane_fill_order[i], mm_col, df.iloc[i]['mm'])
     # worksheet.write(row+lane_fill_order[i], ss_col, df.iloc[i]['ss'])
@@ -58,7 +62,7 @@ def create_lane_chart(chart_name='Lane_order_MPSA_2022'):
     
     heats = create_heats(cur_df)
     for heat in range(len(heats)):
-      worksheet.write(row, idx_col, cur_event['S.N.'], bold)
+      worksheet.write(row, idx_col, cur_event['S.N'], bold)
       if (len(heats) == 1):
         worksheet.write(row, name_col, f"{cur_event_name} Final", bold)
       else:

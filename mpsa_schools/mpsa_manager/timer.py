@@ -2,7 +2,7 @@ import xlsxwriter
 from data.event_data import *
 
 PLACE = 'School/Club'
-DAYS = 1
+DAY = 1
 
 days = []
 for i in range(DAYS):
@@ -20,7 +20,10 @@ def append_in_sheet(df, worksheet, row):
 	for i in range(len(df)):
 		worksheet.write(row+i, lane_col, i+1)
 		worksheet.write(row+i, name_col, df.iloc[i]['Name'])
-		worksheet.write(row+i, dob_col, df.iloc[i]['Date of Birth'])
+		try:
+			worksheet.write(row+i, dob_col, df.iloc[i]['Date of Birth'])
+		except:
+			pass
 		# worksheet.write(row+i, district_col, df.iloc[i][PLACE])
 		worksheet.write(row+i, mm_col, df.iloc[i]['mm'])
 		worksheet.write(row+i, ss_col, df.iloc[i]['ss'])
@@ -41,7 +44,7 @@ def create_result_chart(chart_name='Lane_order_MPSA_2022'):
 			
 			cur_df = pd.read_csv(f"data/csv_event_list/{day}/{cur_event_name}.csv")	
 			
-			worksheet.write(row, idx_col, cur_event['S.N.'], bold)
+			worksheet.write(row, idx_col, cur_event['S.N'], bold)
 			worksheet.write(row, name_col, f"{cur_event_name} Results", bold)
 			row += 1
 			worksheet.write(row, lane_col, "Position", bold)
@@ -91,11 +94,11 @@ def update_time(df_path):
 
 def find_event():
 	
-	cur_day_events = data[days[DAYS-1]]
+	cur_day_events = data[days[DAY-1]]
 	cur_event_number = int(input("Enter Current Event Number : "))
 	print("Current Event Details")
-	print(cur_day_events.iloc[cur_event_number-1]['S.N.'], cur_day_events.iloc[cur_event_number-1]['Event Name'], cur_day_events.iloc[cur_event_number-1]['Category'], cur_day_events.iloc[cur_event_number-1]['Group'], '\n')
-	cur_event_path = f"data/csv_event_list/{days[DAYS-1]}/{cur_day_events.iloc[cur_event_number-1]['Event Name']} {cur_day_events.iloc[cur_event_number-1]['Category']} {cur_day_events.iloc[cur_event_number-1]['Group']}.csv"
+	print(cur_day_events.iloc[cur_event_number-1]['S.N'], cur_day_events.iloc[cur_event_number-1]['Event Name'], cur_day_events.iloc[cur_event_number-1]['Category'], cur_day_events.iloc[cur_event_number-1]['Group'], '\n')
+	cur_event_path = f"data/csv_event_list/{days[DAY-1]}/{cur_day_events.iloc[cur_event_number-1]['Event Name']} {cur_day_events.iloc[cur_event_number-1]['Category']} {cur_day_events.iloc[cur_event_number-1]['Group']}.csv"
 
 	update_time(cur_event_path)
 	create_result_chart('Final Results')

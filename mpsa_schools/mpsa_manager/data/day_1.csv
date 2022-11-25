@@ -1,43 +1,27 @@
-S.N.,Event Name,Category,Group
-1,50 mt. Back Stroke Kick,Boys,13 - 14 Year
-2,50 mt. Back Stroke Kick,Girls,13 - 14 Year
-3,50 mt. Back Stroke Kick,Boys,11 - 12 Year
-4,50 mt. Back Stroke Kick,Girls,11 - 12 Year
-5,50 mt. Back Stroke Kick,Boys,9 - 10 Year
-6,50 mt. Back Stroke Kick,Girls,9 - 10 Year
-7,50 mt. Back Stroke Kick,Boys,6 - 8 Year
-8,50 mt. Back Stroke Kick,Girls,6 - 8 Year
-9,50 mt. Back Stroke Kick,Boys,4 - 5 Year
-10,50 mt. Back Stroke Kick,Girls,4 - 5 Year
-11,50 mt. Free Style Kick,Boys,13 - 14 Year
-12,50 mt. Free Style Kick,Girls,13 - 14 Year
-13,50 mt. Free Style Kick,Boys,11 - 12 Year
-14,50 mt. Free Style Kick,Girls,11 - 12 Year
-15,50 mt. Free Style Kick,Boys,9 - 10 Year
-16,50 mt. Free Style Kick,Girls,9 - 10 Year
-17,50 mt. Free Style Kick,Boys,6 - 8 Year
-18,50 mt. Free Style Kick,Girls,6 - 8 Year
-19,50 mt. Free Style Kick,Boys,4 - 5 Year
-20,50 mt. Free Style Kick,Girls,4 - 5 Year
-21,50 mt. Back Stroke,Boys,13 - 14 Year
-22,50 mt. Back Stroke,Girls,13 - 14 Year
-23,50 mt. Back Stroke,Boys,11 - 12 Year
-24,50 mt. Back Stroke,Girls,11 - 12 Year
-25,50 mt. Back Stroke,Boys,9 - 10 Year
-26,50 mt. Back Stroke,Girls,9 - 10 Year
-27,50 mt. Back Stroke,Boys,6 - 8 Year
-28,50 mt. Back Stroke,Girls,6 - 8 Year
-29,50 mt. Back Stroke,Boys,4 - 5 Year
-30,50 mt. Back Stroke,Girls,4 - 5 Year
-31,50 mt. Free Style,Boys,13 - 14 Year
-32,50 mt. Free Style,Girls,13 - 14 Year
-33,50 mt. Free Style,Boys,11 - 12 Year
-34,50 mt. Free Style,Girls,11 - 12 Year
-35,50 mt. Free Style,Boys,9 - 10 Year
-36,50 mt. Free Style,Girls,9 - 10 Year
-37,50 mt. Free Style,Boys,6 - 8 Year
-38,50 mt. Free Style,Girls,6 - 8 Year
-39,50 mt. Free Style,Boys,4 - 5 Year
-40,50 mt. Free Style,Girls,4 - 5 Year
-41,50 mt. Free Style,Boys,Elite
-42,50 mt. Free Style Kick,Boys,Elite
+S.N,Event Name,Category,Group,Remark
+1,800 mt. Free Style,Boys,U-17,Time Trial
+2,800 mt. Free Style,Girls,U-19,Time Trial
+3,200 mt. Free Style,Boys,U-14,Time Trial
+4,200 mt. Free Style,Girls,U-14,Time Trial
+5,100 mt. Breast Stroke,Boys,U-17,-
+6,100 mt. Breast Stroke,Girls,U-17,-
+7,100 mt. Breast Stroke,Boys,U-19,-
+8,100 mt. Breast Stroke,Girls,U-19,-
+9,100 mt. Breast Stroke,Boys,U-14,-
+10,100 mt. Breast Stroke,Girls,U-14,-
+11,50 mt. Butter Fly Stroke,Boys,U-17,-
+12,50 mt. Butter Fly Stroke,Girls,U-17,-
+13,50 mt. Butter Fly Stroke,Boys,U-19,-
+14,50 mt. Butter Fly Stroke,Girls,U-19,-
+15,50 mt. Butter Fly Stroke,Boys,U-14,-
+16,50 mt. Butter Fly Stroke,Girls,U-14,-
+17,50 mt. Back Stroke,Boys,U-17,-
+18,50 mt. Back Stroke,Girls,U-17,-
+19,100 mt. Butter Fly Stroke,Boys,U-14,-
+20,100 mt. Butter Fly Stroke,Girls,U-14,-
+21,400 mt. I.M.,Boys,U-19,Time Trial
+22,400 mt. I.M.,Girls,U-19,Time Trial
+23,400 mt. I.M.,Boys,U-17,Time Trial
+24,400 mt. I.M.,Girls,U-17,Time Trial
+25,4X100 mt. Medley Relay,Boys,U-14,Time Trial
+26,4X100 mt. Medley Relay,Girls,U-14,Time Trial
