@@ -2,18 +2,27 @@ import pandas as pd
 from datetime import date, datetime
 from data.event_data import *
 from tqdm import tqdm
-
+import traceback
 import warnings
 warnings.filterwarnings("ignore")
 
-PLACE = 'Divison'
-GROUPS = {"I": "U-19",
-          "II": "U-17",
-          "III": "U-14",
+PLACE = 'School'
+RESPONSE_PATH = "data/2023 Indore District Swimming Competition(Responses) - Form responses 1.csv"
+GROUPS = {"Senior": "Senior",
+          "Group 1  (Born in 2006/2007/2008)": "I",
+          "Group 2  (Born in 2009/2010/2011)": "II",
+          "Group 3  (Born in 2012/2013)": "III",
+          "Group 4  (Born in 2014/2015)": "IV"
           }
-EVENT_COLS = {"I":"Events for group 1",
-              "II":"Events for group 2",
-              "III":"Events for group 3",}
+EVENT_COLS = {"Senior": "Events (Max 5) for Seniors",
+          "Group 1  (Born in 2006/2007/2008)": "Events (Max 5) for group 1",
+          "Group 2  (Born in 2009/2010/2011)": "Events (Max 5) for group 2",
+          "Group 3  (Born in 2012/2013)": "Events (Max 5) for Group 3",
+          "Group 4  (Born in 2014/2015)": "Events (Max 6) for group 4"
+          }
+
+SENIOR = ["Men", "Women"]
+JUNIOR = ["Boys", "Girls"]
 
 def get_age_group_from_birthdate(group): # birthdate: str) -> str:
   # birthdate = datetime.strptime(birthdate, '%d/%m/%Y')
@@ -31,26 +40,21 @@ def process_age_group(df: pd.DataFrame) -> pd.DataFrame:
   return df
 
 def get_key(my_dict, val):
-  for key, value in my_dict.items():
-    if val == value:
-      return key
-  return "Key doesnt exist in constant GROUPS"
+  try:
+    for key, value in my_dict.items():
+      if val == value:
+        return key
+  except:
+    print("Key doesnt exist in constant GROUPS")
+    traceback.print_exc()
 
 def merge_events(df):
   r = ['0']*len(df)
   ser = pd.Series(r, copy=False)
   for i in range(len(df)):
-    # if df.iloc[i]["Events for group 1"]:
-    #   ser.iloc[i] = df.iloc[i]["Events for group 1"]
-    # elif df.iloc[i]["Events for group 2"]:
-    #   ser.iloc[i] = df.iloc[i]["Events for group 2"]
-    # elif df.iloc[i]["Events for group 3"]:
-    #   ser.iloc[i] = df.iloc[i]["Events for group 3"]
-    if type(df.iloc[i][EVENT_COLS[get_key(GROUPS, df.iloc[i]['Group'])]]) != float:
-      ser.iloc[i] = df.iloc[i][EVENT_COLS[get_key(GROUPS, df.iloc[i]['Group'])]]
-    else:
-      print("ERROR AT INDEX : ", i)
-    df['Events'] = ser
+    ser.iloc[i] = df.iloc[i][EVENT_COLS[get_key(GROUPS, df.iloc[i]['Group'])]]
+  
+  df['Events'] = ser
   return df
 
 def process_events(df):
@@ -59,7 +63,36 @@ def process_events(df):
     df['Events'] = df['Events'].apply(lambda x: x.split(", "))
     return df
 
-def update_events(responses="data/Schools MPSA State 2022 (Responses) - Form responses 1.csv"):
+def get_category_from_gender(event, day):
+  if data[day].iloc[event]['Category'] == 'Male':
+          if data[day].iloc[event]['Group'] == 'Senior':
+            category = SENIOR[0]
+          else:
+            category = JUNIOR[0]
+  else:
+    if data[day].iloc[event]['Group'] == 'Senior':
+      category = SENIOR[1]
+    else:
+      category = JUNIOR[1]
+  # print(category)
+  return category
+
+def get_category_from_string(gender, group):
+  print(gender)
+  if gender == 'Male':
+          if group == 'Senior':
+            category = SENIOR[0]
+          else:
+            category = JUNIOR[0]
+  else:
+    if group == 'Senior':
+      category = SENIOR[1]
+    else:
+      category = JUNIOR[1]
+  # print(category)
+  return category
+
+def update_events(responses=RESPONSE_PATH):
   print("Initializing Data Buffer ...")
   raw_data = {	
   'Name': [],
@@ -74,6 +107,8 @@ def update_events(responses="data/Schools MPSA State 2022 (Responses) - Form res
     for day in data:
       for event in range(len(data[day])):
         df = pd.DataFrame(raw_data, columns=['Name', 'Date of Birth', PLACE, 'mm', 'ss', 'ms'])
+        
+        # event_name = f"{data[day].iloc[event]['Event Name']} {data[day].iloc[event]['Category']} {data[day].iloc[event]['Group']}"
         event_name = f"{data[day].iloc[event]['Event Name']} {data[day].iloc[event]['Category']} {data[day].iloc[event]['Group']}"
         event_ref[event_name] = day
         df.to_csv(f'data/csv_event_list/{day}/{event_name}.csv', index=False)
@@ -87,7 +122,7 @@ def update_events(responses="data/Schools MPSA State 2022 (Responses) - Form res
   try:
     for athlete in tqdm(range(len(responses_df))):
       for event in responses_df['Events'].iloc[athlete]:
-        cur_event_name= f"{event} {responses_df.iloc[athlete]['Category']} {responses_df.iloc[athlete]['Group']}"
+        cur_event_name= f"{event} {get_category_from_string(responses_df.iloc[athlete]['Category'], responses_df.iloc[athlete]['Group'])} {responses_df.iloc[athlete]['Group']}"
         cur_event_day = event_ref[cur_event_name]
         cur_event_path = f"data/csv_event_list/{cur_event_day}/{cur_event_name}.csv"
         cur_event_df = pd.read_csv(cur_event_path)
@@ -106,8 +141,9 @@ def update_events(responses="data/Schools MPSA State 2022 (Responses) - Form res
           cur_event_df = cur_event_df.append(raw_data, ignore_index=True)
           cur_event_df.to_csv(cur_event_path, index=False)
   except Exception as e:
+    traceback.print_exc()
     print(e)
-    print(f"KeyError mismatch :\n{cur_event_name} \nAthlete - {responses_df['Name'].iloc[athlete]}\nRow Number - {athlete+2}")
+    # print(f"KeyError mismatch :\n{cur_event_name} \nAthlete - {responses_df['Name'].iloc[athlete]}\nRow Number - {athlete+2}")
   print("Finished creating dataset")
 
 def main():

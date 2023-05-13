@@ -1,5 +1,5 @@
 import pandas as pd
-DAYS = 4
+DAYS = 1
 
 def process_data():
 	data = {}

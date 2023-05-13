@@ -1,7 +1,7 @@
 import xlsxwriter
 from data.event_data import *
 
-PLACE = 'School/Club'
+PLACE = 'School'
 DAY = 1
 
 days = []
@@ -22,6 +22,7 @@ def append_in_sheet(df, worksheet, row):
 		worksheet.write(row+i, name_col, df.iloc[i]['Name'])
 		try:
 			worksheet.write(row+i, dob_col, df.iloc[i]['Date of Birth'])
+			worksheet.write(row+i, district_col, df.iloc[i][PLACE])
 		except:
 			pass
 		# worksheet.write(row+i, district_col, df.iloc[i][PLACE])
@@ -44,13 +45,13 @@ def create_result_chart(chart_name='Lane_order_MPSA_2022'):
 			
 			cur_df = pd.read_csv(f"data/csv_event_list/{day}/{cur_event_name}.csv")	
 			
-			worksheet.write(row, idx_col, cur_event['S.N'], bold)
+			worksheet.write(row, idx_col, cur_event['S.N.'], bold)
 			worksheet.write(row, name_col, f"{cur_event_name} Results", bold)
 			row += 1
 			worksheet.write(row, lane_col, "Position", bold)
 			worksheet.write(row, name_col, "Name", bold)
 			worksheet.write(row, dob_col, 'DOB', bold)
-			# worksheet.write(row, district_col, PLACE, bold)
+			worksheet.write(row, district_col, PLACE, bold)
 			worksheet.write(row, mm_col, "mm", bold)
 			worksheet.write(row, ss_col, "ss", bold)
 			worksheet.write(row, ms_col, "ms", bold)
@@ -97,7 +98,7 @@ def find_event():
 	cur_day_events = data[days[DAY-1]]
 	cur_event_number = int(input("Enter Current Event Number : "))
 	print("Current Event Details")
-	print(cur_day_events.iloc[cur_event_number-1]['S.N'], cur_day_events.iloc[cur_event_number-1]['Event Name'], cur_day_events.iloc[cur_event_number-1]['Category'], cur_day_events.iloc[cur_event_number-1]['Group'], '\n')
+	print(cur_day_events.iloc[cur_event_number-1]['S.N.'], cur_day_events.iloc[cur_event_number-1]['Event Name'], cur_day_events.iloc[cur_event_number-1]['Category'], cur_day_events.iloc[cur_event_number-1]['Group'], '\n')
 	cur_event_path = f"data/csv_event_list/{days[DAY-1]}/{cur_day_events.iloc[cur_event_number-1]['Event Name']} {cur_day_events.iloc[cur_event_number-1]['Category']} {cur_day_events.iloc[cur_event_number-1]['Group']}.csv"
 
 	update_time(cur_event_path)

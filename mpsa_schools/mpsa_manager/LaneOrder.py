@@ -1,6 +1,6 @@
 from data.event_data import *
 import xlsxwriter
-PLACE = 'School/Club'
+PLACE = 'School'
 DAYS = 1
 days = []
 for i in range(DAYS):
@@ -25,6 +25,8 @@ def append_in_sheet(df, worksheet, row):
     worksheet.write(row+lane_fill_order[i], name_col, df.iloc[i]['Name'])
     try:
       worksheet.write(row+lane_fill_order[i], dob_col, df.iloc[i]['Date of Birth'])
+      worksheet.write(row+lane_fill_order[i], district_col, df.iloc[i][PLACE])
+
     except:
       pass
     
@@ -45,7 +47,7 @@ def create_heats(cur_df):
   
   return heats
 
-def create_lane_chart(chart_name='Lane_order_MPSA_2022'):
+def create_lane_chart(chart_name='Lane_order_MPSA_2023'):
   workbook = xlsxwriter.Workbook(f'results/{chart_name}.xlsx')
   bold = workbook.add_format({'bold': True})
   
@@ -62,7 +64,7 @@ def create_lane_chart(chart_name='Lane_order_MPSA_2022'):
     
     heats = create_heats(cur_df)
     for heat in range(len(heats)):
-      worksheet.write(row, idx_col, cur_event['S.N'], bold)
+      worksheet.write(row, idx_col, cur_event['S.N.'], bold)
       if (len(heats) == 1):
         worksheet.write(row, name_col, f"{cur_event_name} Final", bold)
       else:
