@@ -62,6 +62,7 @@ def create_result_chart(chart_name='Lane_order_MPSA_2022'):
 
 def update_time(df_path):
 	df = pd.read_csv(df_path)
+	scores = pd.read_csv('data/scores.csv')
 	for athlete in range(len(df)):
 		print(f"Athlete Name : {df.iloc[athlete]['Name']}")
 		mm = int(input("Enter mm : "))
@@ -76,6 +77,19 @@ def update_time(df_path):
 	print('\n',df, '\n')
 	confirm = input("\nConfirm ?\ny: Yes, n : NO\n")
 	if confirm == 'y':
+		if len(df)>=3:
+			scores.loc[scores['Name']==df.iloc[0]['Name'], 'Score'] += 5
+			scores.loc[scores['Name']==df.iloc[1]['Name'], 'Score'] += 3
+			scores.loc[scores['Name']==df.iloc[2]['Name'], 'Score'] += 1
+			print("Updated Scores : ")
+			print(scores.loc[scores['Name']==df.iloc[0]['Name']])
+			print(scores.loc[scores['Name']==df.iloc[1]['Name']])
+			print(scores.loc[scores['Name']==df.iloc[2]['Name']])
+		else:
+			print("No changes in scores, Previous Scores were : ")
+			for i in range(len(df)):
+				print(scores.loc[scores['Name']==df.iloc[i]['Name']])
+		scores.to_csv('data/scores.csv', index=False)
 		df.to_csv(df_path)
 	else:
 		while not confirm == 'y':

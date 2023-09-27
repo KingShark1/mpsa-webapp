@@ -90,7 +90,7 @@ def get_category_from_gender(event, day):
   return category
 
 def get_category_from_string(gender, group):
-  print(gender)
+  # print(gender)
   if gender == 'Boys':
           if group == 'Senior':
             category = SENIOR[0]
@@ -131,10 +131,22 @@ def update_events(responses=RESPONSE_PATH):
   responses_df = pd.read_csv(responses)
   responses_df = process_events(responses_df)
   responses_df = responses_df[['Name', 'Date of Birth', 'Category', 'Group', PLACE, 'Events']]
+
+  column_names = ['Name', 'Category', 'Group', 'Score']
+  scores = pd.DataFrame(columns=column_names)
   try:
     for athlete in tqdm(range(len(responses_df))):
+      category = get_category_from_string(responses_df.iloc[athlete]['Category'], responses_df.iloc[athlete]['Group'])
+      # Keep another database for maintaining Scores.
+      athlete_data = {'Name': responses_df.iloc[athlete]['Name'],
+                      'Category': category,
+                      'Group': responses_df.iloc[athlete]['Group'],
+                      'Score': 0}
+      scores = scores.append(athlete_data, ignore_index=True)
+      # print(scores)
+      # Add in the database.
       for event in responses_df['Events'].iloc[athlete]:
-        cur_event_name= f"{event} {get_category_from_string(responses_df.iloc[athlete]['Category'], responses_df.iloc[athlete]['Group'])} {responses_df.iloc[athlete]['Group']}"
+        cur_event_name= f"{event} {category} {responses_df.iloc[athlete]['Group']}"
         cur_event_day = event_ref[cur_event_name]
         cur_event_path = f"data/csv_event_list/{cur_event_day}/{cur_event_name}.csv"
         cur_event_df = pd.read_csv(cur_event_path)
@@ -156,6 +168,7 @@ def update_events(responses=RESPONSE_PATH):
     traceback.print_exc()
     print(e)
     # print(f"KeyError mismatch :\n{cur_event_name} \nAthlete - {responses_df['Name'].iloc[athlete]}\nRow Number - {athlete+2}")
+  scores.to_csv('data/scores.csv', index=False)
   print("Finished creating dataset")
 
 def main():
