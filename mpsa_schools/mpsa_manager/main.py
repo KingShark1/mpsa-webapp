@@ -6,20 +6,32 @@ import traceback
 import warnings
 warnings.filterwarnings("ignore")
 
-PLACE = 'School'
-RESPONSE_PATH = "data/2023 Indore District Swimming Competition(Responses) - Form responses 1.csv"
+PLACE = 'School/Club'
+RESPONSE_PATH = "data/Schools 2023 District (indore) - Athete Responses.csv"
+# GROUPS = {"Senior": "Senior",
+#           "Group 1  (Born in 2006/2007/2008)": "I",
+#           "Group 2  (Born in 2009/2010/2011)": "II",
+#           "Group 3  (Born in 2012/2013)": "III",
+#           "Group 4  (Born in 2014/2015)": "IV"
+#           }
 GROUPS = {"Senior": "Senior",
-          "Group 1  (Born in 2006/2007/2008)": "I",
-          "Group 2  (Born in 2009/2010/2011)": "II",
-          "Group 3  (Born in 2012/2013)": "III",
+          "I": "I",
+          "II": "II",
+          "III": "III",
           "Group 4  (Born in 2014/2015)": "IV"
           }
 EVENT_COLS = {"Senior": "Events (Max 5) for Seniors",
-          "Group 1  (Born in 2006/2007/2008)": "Events (Max 5) for group 1",
-          "Group 2  (Born in 2009/2010/2011)": "Events (Max 5) for group 2",
-          "Group 3  (Born in 2012/2013)": "Events (Max 5) for Group 3",
+          "I": "Events for group 1",
+          "II": "Events for group 2",
+          "III": "Events for group 3",
           "Group 4  (Born in 2014/2015)": "Events (Max 6) for group 4"
           }
+# EVENT_COLS = {"Senior": "Events (Max 5) for Seniors",
+#           "Group 1  (Born in 2006/2007/2008)": "Events (Max 5) for group 1",
+#           "Group 2  (Born in 2009/2010/2011)": "Events (Max 5) for group 2",
+#           "Group 3  (Born in 2012/2013)": "Events (Max 5) for Group 3",
+#           "Group 4  (Born in 2014/2015)": "Events (Max 6) for group 4"
+#           }
 
 SENIOR = ["Men", "Women"]
 JUNIOR = ["Boys", "Girls"]
@@ -64,7 +76,7 @@ def process_events(df):
     return df
 
 def get_category_from_gender(event, day):
-  if data[day].iloc[event]['Category'] == 'Male':
+  if data[day].iloc[event]['Category'] == 'Boys':
           if data[day].iloc[event]['Group'] == 'Senior':
             category = SENIOR[0]
           else:
@@ -79,7 +91,7 @@ def get_category_from_gender(event, day):
 
 def get_category_from_string(gender, group):
   print(gender)
-  if gender == 'Male':
+  if gender == 'Boys':
           if group == 'Senior':
             category = SENIOR[0]
           else:
