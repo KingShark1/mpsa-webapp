@@ -31,7 +31,7 @@ def append_in_sheet(df, worksheet, row):
 		worksheet.write(row+i, ms_col, df.iloc[i]['ms'])
 	
 
-def create_result_chart(chart_name='Lane_order_MPSA_2022'):
+def create_result_chart(chart_name='Lane_order_MPSA_2023'):
 	workbook = xlsxwriter.Workbook(f'results/{chart_name}.xlsx')
 	bold = workbook.add_format({'bold': True})
 	
@@ -106,6 +106,15 @@ def update_time(df_path):
 			confirm = input("\nConfirm ?\ny: Yes, n : NO\n")
 		df.to_csv(df_path)
 
+def update_championship_standings():
+	df = pd.read_csv('data/scores.csv')	
+	result_df = pd.DataFrame(columns=['Category', 'Group', 'Name', 'Score'])
+	grouped = df.groupby(['Category', 'Group'], group_keys=False).apply(lambda x: x.sort_values(by='Score', ascending=False))
+	for (category, group), group_df in grouped.groupby(['Category', 'Group']):
+		top_3_scores = group_df.head(3)
+		result_df = pd.concat([result_df, top_3_scores], ignore_index=True)
+		
+	result_df.to_csv('results/championship.csv')
 
 def find_event():
 	
@@ -117,5 +126,6 @@ def find_event():
 
 	update_time(cur_event_path)
 	create_result_chart('Final Results')
+	update_championship_standings()
 
 find_event()
